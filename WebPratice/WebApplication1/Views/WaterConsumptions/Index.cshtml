@@ -1,0 +1,48 @@
+﻿@{
+    ViewData["Title"] = "WaterConsumption";
+}
+@model IEnumerable<ConsoleApp1.Model.WaterConsumption>
+
+<style>
+    table, th, td {
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+    th, td {
+        padding-left: 15px;
+        padding-right: 15px;
+        text-align: left;
+    }
+</style>
+
+<h1>WaterConsumption List</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>生活用水量</th>
+            <th>縣市別</th>
+            <th>供水人數</th>
+            <th>每人每日生活用水量(公升)</th>
+            <th>統計年度</th>
+            <th>備註</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (ConsoleApp1.Model.WaterConsumption w in Model)
+        {
+        <tr>
+            <td>@w.consumptionOfWater</td>
+            <td>@w.executingUnit</td>
+            <td>@w.populationServed</td>
+            <td>@w.theDailyDomesticConsumptionOfWaterPerPerson</td>
+            <td>@w.year</td>
+            <td>@w.remarks</td>
+        </tr>
+         }
+        </tbody>
+    <tfoot>
+
+    </tfoot>
+</table>

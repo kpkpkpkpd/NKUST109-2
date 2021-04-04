@@ -8,7 +8,7 @@ using ConsoleApp1.Model;
 
 namespace ConsoleApp1.Service
 {
-    class ImportJsonService
+    public class ImportJsonService
     {
         public ImportJsonService() { }
 

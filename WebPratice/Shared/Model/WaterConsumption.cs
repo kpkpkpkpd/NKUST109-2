@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp1.Model
 {
-    class WaterConsumption
+    public class WaterConsumption
     {
         public int consumptionOfWater { get; set; } // ConsumptionOfWater(生活用水量，立方公尺)
         public string executingUnit { get; set; } // ExecutingUnit(縣市別)
