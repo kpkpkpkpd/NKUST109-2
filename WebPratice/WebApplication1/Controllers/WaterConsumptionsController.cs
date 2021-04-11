@@ -21,12 +21,14 @@ namespace WebApplication1.Controllers
         {
             //string filePath = ConsoleApp1.Utlis.FilePath.getFilePath("7D1311DD-E1DE-4B01-A5ED-1FC589A7C082.json");
 
-           // List<WaterConsumption> results = new ImportJsonService().read(filePath);
+            // List<WaterConsumption> results = new ImportJsonService().read(filePath);
 
-            return View();
+            List<WaterConsumption> results = _context.waterConsumptions.ToList<WaterConsumption>();
+
+            return View(results);
         }
 
-        [HttpGet]
+        [HttpPost]
         public IActionResult Import()
         {
             string filePath = ConsoleApp1.Utlis.FilePath.getFilePath("7D1311DD-E1DE-4B01-A5ED-1FC589A7C082.json");
@@ -34,11 +36,17 @@ namespace WebApplication1.Controllers
             List<WaterConsumption> results = new ImportJsonService().read(filePath);
 
             _context.waterConsumptions.AddRange(results);
-
             _context.SaveChanges();
 
             return Content("OK");
         }
 
+        [Route("Unit/{unitName}")]
+        public IActionResult Unit(string unitName)
+        {
+            List<WaterConsumption> results = _context.waterConsumptions.Where(e => e.executingUnit == unitName).ToList<WaterConsumption>();
+
+            return View(results);
+        }
     }
 }
