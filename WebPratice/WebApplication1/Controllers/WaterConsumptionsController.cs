@@ -9,6 +9,7 @@ using WebApplication1.Data;
 
 namespace WebApplication1.Controllers
 {
+    [Route("[controller]")]
     public class WaterConsumptionsController : Controller
     {
         private ApplicationDbContext _context;
@@ -46,7 +47,7 @@ namespace WebApplication1.Controllers
         {
             List<WaterConsumption> results = _context.waterConsumptions.Where(e => e.executingUnit == unitName).ToList<WaterConsumption>();
 
-            return View(results);
+            return View("../WaterConsumptions/Index", results);
         }
     }
 }
