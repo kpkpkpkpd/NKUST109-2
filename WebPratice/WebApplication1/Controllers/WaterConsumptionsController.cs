@@ -16,20 +16,15 @@ namespace WebApplication1.Controllers
 
         public WaterConsumptionsController(ApplicationDbContext context)
         {
-            _context = context;
+            this._context = context;
         }
+        [HttpGet]
         public IActionResult Index()
         {
-            //string filePath = ConsoleApp1.Utlis.FilePath.getFilePath("7D1311DD-E1DE-4B01-A5ED-1FC589A7C082.json");
-
-            // List<WaterConsumption> results = new ImportJsonService().read(filePath);
-
-            List<WaterConsumption> results = _context.waterConsumptions.ToList<WaterConsumption>();
-
-            return View(results);
+            return View();
         }
 
-        [HttpPost]
+        [HttpGet("Import")]
         public IActionResult Import()
         {
             string filePath = ConsoleApp1.Utlis.FilePath.getFilePath("7D1311DD-E1DE-4B01-A5ED-1FC589A7C082.json");
@@ -42,12 +37,46 @@ namespace WebApplication1.Controllers
             return Content("OK");
         }
 
-        [Route("Unit/{unitName}")]
-        public IActionResult Unit(string unitName)
+        [HttpGet("DeleteAll")]
+        public IActionResult DeleteAll()
         {
-            List<WaterConsumption> results = _context.waterConsumptions.Where(e => e.executingUnit == unitName).ToList<WaterConsumption>();
+            foreach(var data in _context.waterConsumptions)
+            {
+                _context.waterConsumptions.Remove(data);
+            }
+            _context.SaveChanges();
 
-            return View("../WaterConsumptions/Index", results);
+            return Content("OK");
         }
+
+        [HttpPost("SearchUnit")]
+        public IActionResult SearchUnit(string unitName)
+        {
+            var query = _context.waterConsumptions.AsQueryable();
+            
+            if (!String.IsNullOrEmpty(unitName))
+            {
+                query = query.Where(e => e.executingUnit == unitName);
+            }
+            //var results = query.Take(10);
+
+            return View("Index", query.ToList());
+        }
+
+        [HttpGet("Create")]
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost("Create")]
+        public IActionResult Create(WaterConsumption create)
+        {
+            _context.waterConsumptions.Add(create);
+            _context.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
+
     }
 }
