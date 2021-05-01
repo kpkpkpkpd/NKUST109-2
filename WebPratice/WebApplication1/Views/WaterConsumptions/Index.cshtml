@@ -8,6 +8,7 @@
         border: 1px solid black;
         border-collapse: collapse;
     }
+
     th, td {
         padding-left: 15px;
         padding-right: 15px;
@@ -51,11 +52,24 @@
                     <td>@w.theDailyDomesticConsumptionOfWaterPerPerson</td>
                     <td>@w.year</td>
                     <td>@w.remarks</td>
+                    <td>
+                        <a href="/WaterConsumptions/Edit/@w.Id">Edit</a>
+                        <a id="delBtn" href="/WaterConsumptions/Delete/@w.Id">Delete</a>
+                    </td>
                 </tr>
             }
         }
     </tbody>
-    <tfoot>
-
-    </tfoot>
 </table>
+
+@section Scripts {
+    <script type="text/javascript">
+        $(function() {
+
+            $('#delBtn').on('click', (e) => {
+
+                return confirm("Are you sure?");
+            });
+        });
+    </script>
+}

@@ -21,7 +21,7 @@ namespace WebApplication1.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            return View();
+            return SearchUnit("");
         }
 
         [HttpGet("Import")]
@@ -78,5 +78,33 @@ namespace WebApplication1.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpGet("Edit/{id}")]
+        public IActionResult Edit(int id)
+        {
+            var edit = _context.waterConsumptions.Find(id);
+
+            return View(edit);
+        }
+
+        [HttpPost("Edit/{id}")]
+        public IActionResult Edit(WaterConsumption edit)
+        {
+            _context.Entry(edit).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            _context.waterConsumptions.Update(edit);
+            _context.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet("Delete/{id}")]
+        public IActionResult Delete(int id)
+        {
+            var water = _context.waterConsumptions.Find(id);
+
+            _context.waterConsumptions.Remove(water);
+            _context.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
     }
 }
