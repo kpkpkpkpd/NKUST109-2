@@ -58,6 +58,7 @@ namespace WebApplication1.Controllers
             {
                 query = query.Where(e => e.executingUnit == unitName);
             }
+            query = query.OrderByDescending(x => x.Id);
             //var results = query.Take(10);
 
             return View("Index", query.ToList());

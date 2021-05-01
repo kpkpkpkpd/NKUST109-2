@@ -4,14 +4,11 @@
 @model IEnumerable<ConsoleApp1.Model.WaterConsumption>
 
 <style>
-    table, th, td {
-        border: 1px solid black;
-        border-collapse: collapse;
-    }
 
-    th, td {
-        padding-left: 15px;
-        padding-right: 15px;
+    table, th, td {
+        border-bottom: 1px solid #ddd;
+        border-collapse: collapse;
+        padding: 15px;
         text-align: left;
     }
 </style>
@@ -37,39 +34,40 @@
             <th>每人每日生活用水量(公升)</th>
             <th>統計年度</th>
             <th>備註</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
 
-        @if (Model != null)
+    @if (Model != null)
+    {
+        @foreach (ConsoleApp1.Model.WaterConsumption w in Model)
         {
-            @foreach (ConsoleApp1.Model.WaterConsumption w in Model)
-            {
-                <tr>
-                    <td>@w.consumptionOfWater</td>
-                    <td>@w.executingUnit</td>
-                    <td>@w.populationServed</td>
-                    <td>@w.theDailyDomesticConsumptionOfWaterPerPerson</td>
-                    <td>@w.year</td>
-                    <td>@w.remarks</td>
-                    <td>
-                        <a href="/WaterConsumptions/Edit/@w.Id">Edit</a>
-                        <a id="delBtn" href="/WaterConsumptions/Delete/@w.Id">Delete</a>
-                    </td>
-                </tr>
-            }
+            <tr>
+                <td>@w.consumptionOfWater</td>
+                <td>@w.executingUnit</td>
+                <td>@w.populationServed</td>
+                <td>@w.theDailyDomesticConsumptionOfWaterPerPerson</td>
+                <td>@w.year</td>
+                <td>@w.remarks</td>
+                <td>
+                    <a href="/WaterConsumptions/Edit/@w.Id">Edit</a> |
+                    <a id="delBtn" href="/WaterConsumptions/Delete/@w.Id">Delete</a>
+                </td>
+            </tr>
         }
+    }
     </tbody>
 </table>
 
 @section Scripts {
     <script type="text/javascript">
-        $(function() {
+        $(document).ready(function () {
 
-            $('#delBtn').on('click', (e) => {
+            $("#delBtn").click(function () {
 
                 return confirm("Are you sure?");
             });
-        });
+        })
     </script>
 }
